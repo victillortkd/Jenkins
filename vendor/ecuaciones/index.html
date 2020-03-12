@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    A= <input type="number" id="a"/> <br> <br>
+    B= <input type="number" id="b"/> <br> <br>
+    C= <input type="number" id="c"/> <br> <br>
+    <button id="boton">Enviar</button>
+</form>
+<br>
+<table border="4px" bordecolor="RED" id="tabla">
+    <tr>
+        <th width="50" height="50">X</th>
+        <th width="50" height="50">Y</th>
+    </tr>
+</table>
+<script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    var boton =  document.getElementById("boton");
+    boton.addEventListener("click",function (e) {
+        e.preventDefault();
+        xhr.open("POST","consulta.php",true);
+
+        let a = document.getElementById("a").value;
+        let b = document.getElementById("b").value;
+        let c = document.getElementById("c").value;
+        xhr.onreadystatechange = function () {
+            if ((xhr.status=200) && (xhr.readyState==4)){
+                console.log(xhr.response);
+                document.getElementById("tabla").innerHTML+=xhr.responseText;
+            }
+        };
+        xhr.send(JSON.stringify({a,b,c}));
+
+    });
+</script>
+</body>
